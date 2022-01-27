@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'AprendiendoAngular';
+  public title: string;
+  public homeText: string;
+  constructor(){
+    this.title = 'Curso de Angular de Víctor Robles';
+    this.homeText = 'Hola desde el elemento padre 3';
+  }
 }

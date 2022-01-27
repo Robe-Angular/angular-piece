@@ -1,0 +1,47 @@
+<h2 class="subheader" *ngIf="is_edit">Editar Artículo</h2>
+<h2 class="subheader" *ngIf="!is_edit">Crear Artículo</h2>
+<form class="mid-form" #articleForm="ngForm" (ngSubmit)= "onSubmit(true)">
+    <div class="form-group">
+        <label for="title">Título</label>
+        <input type="text" name="title" #title="ngModel" [(ngModel)]="article.title" required />
+        <small *ngIf="!title.valid && title.touched">
+            El título no es válido
+        </small>
+    </div>
+    <div class="form-group">
+        <label for="content">Contenido</label>
+        <textarea type="text" name="content" #content="ngModel" [(ngModel)]="article.content" required></textarea>
+        <small *ngIf="!content.valid && content.touched">
+            El contenido no es válido
+        </small>
+    </div>
+    <div class="form-group">
+        <label for="image">Imagen</label>
+        <div class="image-thumb" *ngIf="is_edit">
+            <img src="{{url + 'get-image/' + article.image}}" *ngIf="article.image">
+            <img src="assets/images/imagendefault.png" *ngIf="!article.image">
+        </div>
+        <div id="changed" *ngIf="image_changed">
+            <h3> La imagen se ha actualizado</h3>
+        </div>
+        <div *ngIf="status == 'success' || is_edit == true">
+            <h3 *ngIf = "!is_edit">Ahora guarda la imagen</h3>
+            <angular-file-uploader 
+                [config]="afuConfig"
+                [resetUpload]=resetVar
+                (ApiResponse)="imageUpload($event)">
+            </angular-file-uploader>
+        </div>
+        
+    </div>
+    
+    
+
+    <div class="clearfix"></div>
+
+    <div *ngIf="status != 'success' || is_edit">
+        <input type="submit" value="Guardar" class="btn btn-success" [disabled]="articleForm.invalid" >
+    </div>
+    
+    
+</form>
